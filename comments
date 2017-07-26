@@ -1,0 +1,12 @@
+1. make .exe & zip
+add scripts
+"poststart" : "electron-packager . cpuViewer --platform win32 --arch x64 --out dist/"
+
+"scripts": {    
+    "start": "electron .",
+    "poststart" : "electron-packager . cpuViewer --asar --platform win32 --arch x64 --out dist/"
+},  
+electron-packager . TestApp --asar --platform win32 --arch x64 --out dist/
+
+2. installer
+node installer.js
