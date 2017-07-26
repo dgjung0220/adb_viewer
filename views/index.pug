@@ -1,0 +1,134 @@
+doctype html
+html
+  head
+    meta(charset='UTF-8')
+    title ADB VIEWER
+    link(rel='stylesheet' type='text/css' href='../semantic/dist/semantic.min.css')
+  body
+    h3.title
+
+    .ui.dropdown
+  .text File
+  i.dropdown.icon
+  .menu
+    .item New
+    .item
+      span.description ctrl + o
+      |       Open...
+    .item
+      span.description ctrl + s
+      |       Save as...
+    .item
+      span.description ctrl + r
+      |       Rename
+    .item Make a copy
+    .item
+      i.folder.icon
+      |       Move to folder
+    .item
+      i.trash.icon
+      |       Move to trash
+    .divider
+    .item Download As...
+    .item
+      i.dropdown.icon
+      |       Publish To Web
+      .menu
+        .item Google Docs
+        .item Google Drive
+        .item Dropbox
+        .item Adobe Creative Cloud
+        .item Private FTP
+        .item Another Service...
+    .item E-mail Collaborators
+
+    table(class='ui celled table')
+      thead
+          tr
+              th(class='center aligned' colspan='12') CPUS
+          tr
+              th(class='center aligned' colspan='4') Usage(%)
+              th(class='center aligned' colspan='4') USR Usage(%)
+              th(class='center aligned' colspan='4') SYS Usage(%)
+          tr
+              td(class='center aligned' colspan='4' id='totalUsage')
+              td(class='center aligned' colspan='4' id='totalUSRUsage')
+              td(class='center aligned' colspan='4' id='totalSYSUsage')
+      
+      thead
+          tr
+              th(class='center aligned' colspan='3') CPU0
+              th(class='center aligned' colspan='3') CPU1
+              th(class='center aligned' colspan='3') CPU2
+              th(class='center aligned' colspan='3') CPU3
+          tr
+            td(class='center aligned' colspan='6' id='cpu0Freq')
+            td(class='center aligned' colspan='6' id='cpu2Freq')
+          tr    
+              th(class='center aligned') Total(%)
+              th(class='center aligned') USR(%)
+              th(class='center aligned') SYS(%)
+              th(class='center aligned') Total(%)
+              th(class='center aligned') USR(%)
+              th(class='center aligned') SYS(%)
+              th(class='center aligned') Total(%)
+              th(class='center aligned') USR(%)
+              th(class='center aligned') SYS(%)
+              th(class='center aligned') Total(%)
+              th(class='center aligned') USR(%)
+              th(class='center aligned') SYS(%)
+      tbody
+          tr 
+              td(class='center aligned' id='cpu0TotalUsage')
+              td(class='center aligned' id='cpu0USRUsage')
+              td(class='center aligned' id='cpu0SYSUsage')
+              td(class='center aligned' id='cpu1TotalUsage')
+              td(class='center aligned' id='cpu1USRUsage')
+              td(class='center aligned' id='cpu1SYSUsage')
+              td(class='center aligned' id='cpu2TotalUsage')
+              td(class='center aligned' id='cpu2USRUsage')
+              td(class='center aligned' id='cpu2SYSUsage')
+              td(class='center aligned' id='cpu3TotalUsage')
+              td(class='center aligned' id='cpu3USRUsage')
+              td(class='center aligned' id='cpu3SYSUsage')
+    
+    table(class="ui celled table")
+        thead
+            tr
+                th(class='center aligned' colspan='4') cpus
+        tbody
+            tr
+                td(class='center aligned' colspan='4' id='cpus')
+        thead            
+            tr
+                th(class='center aligned') foreground
+                th(class='center aligned') background
+                th(class='center aligned') system-background
+                th(class='center aligned') top-app
+        tbody
+            tr
+                td(class='center aligned' id='foreground')
+                td(class='center aligned' id='background')
+                td(class='center aligned' id='system-background')
+                td(class='center aligned' id='top-app')
+    
+    table(class='ui celled table')
+        thead
+            tr
+                th(class='center aligned' colspan='4') running process
+        thead
+            tr
+                th(class='center aligned') foreground
+                th(class='center aligned') background
+                th(class='center aligned') system-background
+                th(class='center aligned') top-app
+        tbody
+            tr
+                td(class='center aligned' id='f_process')
+                td(class='center aligned' id='b_process')
+                td(class='center aligned' id='sb_process')
+                td(class='center aligned' id='t_process')
+  script.
+    window.$ = window.jQuery = require('../static/js/jquery-3.2.1.min.js');
+  script(src='../semantic/dist/semantic.min.js')
+  script(src='../static/js/renderer.js')
