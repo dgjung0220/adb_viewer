@@ -1,0 +1,31 @@
+{
+  "name": "adb_viewer",
+  "version": "1.0.0",
+  "description": "android resource viewer(cpu,cpuset) by using adb",
+  "main": "index.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dgjung0220/adb_viewer.git"
+  },
+  "keywords": [
+    "electron"
+  ],
+  "author": "dg.jung",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dgjung0220/adb_viewer/issues"
+  },
+  "homepage": "https://github.com/dgjung0220/adb_viewer#readme",
+  "dependencies": {
+    "adbkit": "^2.10.0",
+    "bluebird": "^3.5.0",
+    "collections": "^5.0.6",
+    "electron-pug": "^1.5.1"
+  },
+  "devDependencies": {
+    "electron": "^1.6.11"
+  }
+}
