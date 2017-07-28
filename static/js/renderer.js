@@ -7,7 +7,7 @@ $(function() {
     
     var $title = $('.title');
     var $interval = $('.ui.dropdown');
-    console.log($interval);
+    $interval.dropdown();
 
     var $totalUsage = $('#totalUsage');
     var $totalUSRUsage = $('#totalUSRUsage');
@@ -28,17 +28,6 @@ $(function() {
     var $cpu2SYSUsage = $('#cpu2SYSUsage');
     var $cpu3SYSUsage = $('#cpu3SYSUsage');
 
-    var initializePrev_cpuUsage = (prev_cpuUsage) => {
-        var cpu = {total : 0,
-        usr : 0,
-        sys : 0,
-        idle : 0
-        }
-        for (var i = 0; i < 5; i++) {
-            prev_cpuUsage.add(cpu);    
-        }
-        return prev_cpuUsage;
-    }
     var prev_cpuUsage = new List();
     var cpu = {
         total : 0,
@@ -50,79 +39,83 @@ $(function() {
         prev_cpuUsage.add(cpu);    
     }
 
+    var trackDevice = () => {
+        client.trackDevices().then(function(tracker){
+            tracker.on('add', function(device) {
+                $title.html(device.id);
+                console.log('Device %s was plugged in', device.id);
+            })
+            tracker.on('remove', function(device) {
+                $title.html("No device connected");
+                console.log('Device %s was unplugged', device.id);
+            })
+        })
+    }
+
     var showCpuUsage = () => {
         var cur_cpuUsage = new List();
-        //var prev_cpuUsage = new List();
         var cpuUsage = new List();
         
-        //prev_cpuUsage = initializePrev_cpuUsage(prev_cpuUsage);
-        client.listDevices().then(function(devices) {
-            return Promise.map(devices, function(device) {
-                $title.html(device.id);
-                
-                var cmd = 'cat /proc/stat';
-                return client.shell($title.html(), cmd).then(adb.util.readAll).then(function(output) {
-                    var result = output.toString().trim().split(' ');
+        var cmd = 'cat /proc/stat';
+        client.shell($title.html(), cmd).then(adb.util.readAll).then(function(output) {
+            var result = output.toString().trim().split(' ');
             
-                    for (var i = 0; i < 5; i++) {
-                        var usr = parseInt(result[2 + (10*i)]);
-                        var sys = parseInt(result[3 + (10*i)]);
-                        var nice = parseInt(result[4 + (10*i)]);
-                        var idle = parseInt(result[5 + (10*i)]);
-                        var total = usr + sys + nice + idle;
+            for (var i = 0; i < 5; i++) {
+                var usr = parseInt(result[2 + (10*i)]);
+                var nice = parseInt(result[3 + (10*i)]);
+                var sys = parseInt(result[4 + (10*i)]);
+                var idle = parseInt(result[5 + (10*i)]);
+                var total = usr + sys + nice + idle;
                         
-                        var cpu = {
-                            total : total,
-                            usr : usr,
-                            sys : sys,
-                            idle : idle
-                        }
-                        cur_cpuUsage.add(cpu);
-                    }
+                var cpu = {
+                    total : total,
+                    usr : usr+nice,
+                    sys : sys,
+                    idle : idle
+                }
+                cur_cpuUsage.add(cpu);
+            }
 
-                    var cur_cpus = cur_cpuUsage.toJSON();
-                    var prev_cpus = prev_cpuUsage.toJSON();
-                    
-                    for (var j = 0; j < 5; j++) {
-                        var totalUsage = ((cur_cpus[j].total - prev_cpus[j].total) - (cur_cpus[j].idle - prev_cpus[j].idle)) / (cur_cpus[j].total - prev_cpus[j].total) * 100;
-                        //var usrUsage = ((cur_cpus[0].usr - prev_cpus[0].usr) - (cur_cpus[0].idle - prev_cpus[0].idle)) / (cur_cpus[0].total - prev_cpus[0].total) * 100;
-                        //var sysUsage = ((cur_cpus[0].sys - prev_cpus[0].sys) - (cur_cpus[0].idle - prev_cpus[0].idle)) / (cur_cpus[0].total - prev_cpus[0].total) * 100;
-                        var cpus = {
-                            totalUsage : totalUsage.toFixed(3),
-                    //        usrUsage : usrUsage,
-                    //        sysUsage : sysUsage
-                        }
-                        cpuUsage.add(cpus);
-                    }
-                    //console.log(totalUsage);
-                    //console.log(usrUsage);
-                    //console.log(sysUsage);
+            var cur_cpus = cur_cpuUsage.toJSON();
+            var prev_cpus = prev_cpuUsage.toJSON();
+            
+            for (var j = 0; j < 5; j++) {
+                var totalUsage = ((cur_cpus[j].total - prev_cpus[j].total) - (cur_cpus[j].idle - prev_cpus[j].idle)) / (cur_cpus[j].total - prev_cpus[j].total) * 100;
+                var usrUsage = (cur_cpus[j].usr - prev_cpus[j].usr) / (cur_cpus[j].total - prev_cpus[j].total) * 100;
+                var sysUsage = (cur_cpus[j].sys - prev_cpus[j].sys) / (cur_cpus[j].total - prev_cpus[j].total) * 100;
+                var cpus = {
+                    totalUsage : totalUsage.toFixed(3),
+                    usrUsage : usrUsage.toFixed(3),
+                    sysUsage : sysUsage.toFixed(3)
+                }
+                cpuUsage.add(cpus);
+            }
 
-                    prev_cpuUsage = cur_cpuUsage;
-                    
-                    var cpus = cpuUsage.toJSON();
-                    $totalUsage.html(cpus[0].totalUsage);
-                    //$totalUSRUsage.html(cpus[0].usrUsage);
-                    //$totalSYSUsage.html(cpus[0].sysUsage);
+            prev_cpuUsage = cur_cpuUsage;
+            
+           
 
-                    $cpu0TotalUsage.html(cpus[1].totalUsage);
-                    //$cpu0USRUsage.html(cpus[1].usrUsage);
-                    //$cpu0SYSUsage.html(cpus[1].sysUsage);
-                    
-                    $cpu1TotalUsage.html(cpus[2].totalUsage);
-                    //$cpu2USRUsage.html(cpus[2].usrUsage);
-                    //$cpu2SYSUsage.html(cpus[2].sysUsage);
+            var cpus = cpuUsage.toJSON();
+            $totalUsage.html(cpus[0].totalUsage);
+            $totalUSRUsage.html(cpus[0].usrUsage);
+            $totalSYSUsage.html(cpus[0].sysUsage);
 
-                    $cpu2TotalUsage.html(cpus[3].totalUsage);
-                    //$cpu3USRUsage.html(cpus[3].usrUsage);
-                    //$cpu3SYSUsage.html(cpus[3].sysUsage);
+            $cpu0TotalUsage.html(cpus[1].totalUsage);
+            $cpu0USRUsage.html(cpus[1].usrUsage);
+            $cpu0SYSUsage.html(cpus[1].sysUsage);
+            
+            $cpu1TotalUsage.html(cpus[2].totalUsage);
+            $cpu1USRUsage.html(cpus[2].usrUsage);
+            $cpu1SYSUsage.html(cpus[2].sysUsage);
 
-                    $cpu3TotalUsage.html(cpus[4].totalUsage);
-                    //$cpu4USRUsage.html(cpus[4].usrUsage);
-                    //$cpu4SYSUsage.html(cpus[4].sysUsage);
-                })
-            });
-        });
+            $cpu2TotalUsage.html(cpus[3].totalUsage);
+            $cpu2USRUsage.html(cpus[3].usrUsage);
+            $cpu2SYSUsage.html(cpus[3].sysUsage);
+
+            $cpu3TotalUsage.html(cpus[4].totalUsage);
+            $cpu3USRUsage.html(cpus[4].usrUsage);
+            $cpu3SYSUsage.html(cpus[4].sysUsage);
+        })
     }
 
     var $cpu0Freq = $('#cpu0Freq');
@@ -196,11 +189,12 @@ $(function() {
         }
     }
 
+    trackDevice();
     var showInterval = setInterval(function() {
         showCpuUsage();
         showcpuFreq();
         showCPUSETs();
         showCPUSETs_process();
-    }, 5000);
+    }, 2000);
     
 })

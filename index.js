@@ -14,7 +14,7 @@ const url = require('url');
 let mainWindow;
 
 var createWindow = () => {
-    mainWindow = new BrowserWindow({width : 800, height : 600});
+    mainWindow = new BrowserWindow({width : 1200, height : 600});
 
     mainWindow.loadURL(url.format({
         pathname: path.join(__dirname, 'views/index.pug'),
@@ -22,7 +22,7 @@ var createWindow = () => {
         slashes: true
     }))
 
-    mainWindow.webContents.openDevTools();
+    //mainWindow.webContents.openDevTools();
 
     mainWindow.on('closed', function() {
         mainWindow = null;

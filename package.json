@@ -4,8 +4,7 @@
   "description": "android resource viewer(cpu,cpuset) by using adb",
   "main": "index.js",
   "scripts": {
-    "start": "electron .",
-    "poststart" : "electron-packager . cpuViewer --asar --platform win32 --arch x64 --out dist/"
+    "start": "electron ."
   },
   "repository": {
     "type": "git",
