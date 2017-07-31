@@ -1,6 +1,6 @@
 # adb_viewer
 
-_**Android CPU & CPUSET Viewer by using [electorn][electron], [adbkit][adbkit], For more information, see the [Blog][bearpot-post]**_
+_**Android CPU & CPUSET Viewer by using [electorn][electron], [adbkit][adbkit]. For more information, see the [Blog][bearpot-post]**_
 
 **adb_viewer** is a realtime android resource viewer (CPU Usage, CPU Frequency, CPUSET Configuration, Running process by cpuset) using [Node.js][nodejs], [electron][electron] and [adbkit][adbkit]. It work at Quad Core Processor. (LG V10,V20,G5,G6, Google Pixel)
 
