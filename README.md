@@ -1,6 +1,6 @@
 # adb_viewer
 
-_**Android CPU & CPUSET Viewer by using [electorn][electron], [adbkit][adbkit] [Blog][bearpot-post]**_
+_**Android CPU & CPUSET Viewer by using [electorn][electron], [adbkit][adbkit], For more information, see the [Blog][bearpot-post]**_
 
 **adb_viewer** is a realtime android resource viewer (CPU Usage, CPU Frequency, CPUSET Configuration, Running process by cpuset) using [Node.js][nodejs], [electron][electron] and [adbkit][adbkit]. It work at Quad Core Processor. (LG V10,V20,G5,G6, Google Pixel)
 
@@ -12,14 +12,14 @@ _**Android CPU & CPUSET Viewer by using [electorn][electron], [adbkit][adbkit] [
 
 ## node modules
 
-# dependencies
+#### dependencies
 
 * adbkit
 * collections
 * bluebird 
 * electron-pug
 
-# devDependenices
+#### devDependenices
 
 * asar
 * electron
@@ -36,12 +36,12 @@ npm start
 
 ## adb command line
 
-# Show each core's CPU Usage & Frequency
+#### Show each core's CPU Usage & Frequency
 ```js
 cat /proc/stat
 cat /sys/devices/system/cpu/cpuX/cpufreq/scaling_cur_freq
 ```
-# Show CPUSETs Setting Configuration
+#### Show CPUSETs Setting Configuration
 ```js
 cat /dev/cpuset/cpus
 cat /dev/cpuset/foreground/cpus
@@ -49,7 +49,7 @@ cat /dev/cpuset/background/cpus
 cat /dev/cpuset/system-background/cpus
 cat /dev/cpuset/top-app/cpus
 ```
-# Show running process by CPUSETs
+#### Show running process by CPUSETs
 ```js
 cat /dev/cpuset/foreground/tasks
 cat /dev/cpuset/background/tasks
@@ -77,7 +77,7 @@ node installer.js
 You can find ./dist/installer folder extension in project file.
 
 ## License
-ISC License
+ISC License.
 Copyright © 2017, [bearpot][bearpot], Donggoo Jung
 
 [nodejs]: <http://nodejs.org/>
