@@ -181,10 +181,10 @@ $(function() {
             client.shell($title.html(), cmd).then(adb.util.readAll).then(function(output) {
                 var result = output.toString().trim().split("/");
 
-                $f_process = result[0];
-                $b_process = result[1];
-                $sb_process = result[2];
-                $t_process = result[3];
+                $f_process.html(result[0]);
+                $b_process.html(result[1]);
+                $sb_process.html(result[2]);
+                $t_process.html(result[3]);
             })
         }
     }
