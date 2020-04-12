@@ -78,10 +78,10 @@ You can find ./dist/installer folder extension in project file.
 
 ## License
 ISC License.
-Copyright © 2017, [bearpot][bearpot], Donggoo Jung
+Copyright © 2017, [Donggoo Jung][bearpot]
 
 [nodejs]: <http://nodejs.org/>
 [electron]: <http://electron.atom.io>
 [adbkit]: <https://github.com/openstf/adbkit>
-[bearpot-post]: <http://bearpot.net/blog/2017/07/29/cpu-usage-cgroup-cpusets-viewer1/>
-[bearpot]: <http://bearpot.net>
+[bearpot-post]: <https://dgjung.me/electron/2020/04/12/adb_viewer_electron/>
+[bearpot]: <http://dgjung.me>
