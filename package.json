@@ -29,6 +29,6 @@
     "asar": "^0.13.0",
     "electron": "^1.8.8",
     "electron-installer-squirrel-windows": "^1.3.0",
-    "electron-packager": "^8.7.2"
+    "electron-packager": "^16.0.0"
   }
 }
